@@ -3,16 +3,36 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>רשימת קניות</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter1</h3>
+  <ion-list>
+    <ion-item *ngFor="let listItem of this.list">
+      <ion-icon name="clipboard" item-start></ion-icon>
+      <ion-label>{{listItem.name}}</ion-label>
+    </ion-item>
+  </ion-list>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
+  <ion-fab right bottom>
+    <button ion-fab mini>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="openSocial('facebook', fab4)">
+        <ion-icon name="basket"></ion-icon>
+        <ion-label>פריט לרשימה</ion-label>
+      </button>
+      <button ion-fab (click)="navigateAddToDB()">
+        <ion-icon name="filing"></ion-icon>
+        <ion-label>פריט לבסיס נתונים</ion-label>
+      </button>
+      <button ion-fab (click)="openSocial('vimeo', fab4)">
+        <ion-icon name="cart"></ion-icon>
+        <ion-label>חנות</ion-label>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

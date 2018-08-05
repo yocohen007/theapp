@@ -1,3 +1,24 @@
 page-home {
+    button[ion-fab] {
+        overflow: visible;
+        position: relative;
+        contain: layout;
+        
+        ion-label {
+            position: absolute;
+            top: -8px;
+            right: 40px;
 
+            color: rgb(28, 136, 238);
+            background-color: rgba(255,255,255,0.7);
+            line-height: 24px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+    }
+
+    ion-list {
+        overflow-y: auto;
+        max-height: 72vh;
+    }
 }

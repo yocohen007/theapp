@@ -1,0 +1,3 @@
+interface dbItem {
+    name: string
+}
