@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let listItem of this.list">
+    <ion-item *ngFor="let listItem of modelService.getShoppingList()">
       <ion-icon name="clipboard" item-start></ion-icon>
       <ion-label>{{listItem.name}}</ion-label>
     </ion-item>

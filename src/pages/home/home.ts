@@ -1,27 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AddToDbPage } from '../add-to-db/add-to-db';
+import { ModelService } from '../../model/model-service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  dbItems: dbItem[];
-  list: dbItem[];
 
-  constructor(public navCtrl: NavController) {
-    this.dbItems = [{
-      name: "עגבניות",
-    },{
-      name: "מלפפונים",
-    }];
-    this.list = [{
-      name: "עגבניות",
-    },{
-      name: "מלפפונים",
-    }];
-
+  constructor(public navCtrl: NavController, public modelService: ModelService) {
   }
 
   navigateAddToDB(): void {

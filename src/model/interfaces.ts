@@ -1,3 +1,3 @@
-interface dbItem {
+interface product {
     name: string
 }

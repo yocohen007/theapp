@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>רשימת מוצרים</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let product of modelService.getProductList()" (click)="itemTapped($event, product)">
+      <ion-icon [name]="product.icon" item-start></ion-icon>
+      {{product.name}}
+      <div class="product-note" item-end>
+        {{product.note}}
+      </div>
+    </button>
+  </ion-list>
+  <div *ngIf="selectedItem" padding>
+    You navigated here from <b>{{selectedItem.name}}</b>
+  </div>
+</ion-content>
