@@ -1,9 +1,14 @@
+import * as productsJson from "./products.json";
+
 export class ModelService {
-  private products: product[];
+  private products: any;
   private shoppingList: product[];
 
   constructor() {
-    console.log("constructor");
+    console.log("constructor model-service");
+    this.products = productsJson;
+    // const word = data[0].name;
+    // console.dir(data); // output 'testing'
   }
 
   getProductList(): product[] {
@@ -22,20 +27,20 @@ export class ModelService {
 
   private prepareData(): void {
     //init
-      this.prepareShoppingList();
-      this.prepareProducts();
+    this.prepareShoppingList();
+    this.prepareProducts();
 
   }
 
   prepareProducts(): void {
-    this.products = [];
-    this.products.push({
-      name: "עגבניות",
-    });
-    this.products.push({
-      name: "מלפפונים",
-    });
-}
+    // this.products = [];
+    // this.products.push({
+    //   name: "עגבניות",
+    // });
+    // this.products.push({
+    //   name: "מלפפונים",
+    // });
+  }
 
   private prepareShoppingList(): void {
     this.shoppingList = [];
