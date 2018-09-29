@@ -10,13 +10,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AddToDbPage } from '../pages/add-to-db/add-to-db';
 import { ModelService } from '../model/model-service';
 import { ProductsPage } from '../pages/products/products';
+import { AddToListPage } from '../pages/add-to-list/add-to-list';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ProductsPage,
-    AddToDbPage
+    AddToDbPage,
+    AddToListPage
   ],
   imports: [
     BrowserModule,
@@ -27,7 +29,8 @@ import { ProductsPage } from '../pages/products/products';
     MyApp,
     HomePage,
     ProductsPage,
-    AddToDbPage
+    AddToDbPage,
+    AddToListPage
   ],
   providers: [
     StatusBar,

@@ -25,6 +25,10 @@ export class ModelService {
     return this.shoppingList;
   }
 
+  addToShoppingList(product: string) {
+    this.shoppingList.push({"name":product});
+  }
+
   private prepareData(): void {
     //init
     this.prepareShoppingList();
@@ -44,7 +48,6 @@ export class ModelService {
 
   private prepareShoppingList(): void {
     this.shoppingList = [];
-    // types 0=MP100, 1=FD100, 2=VS100
     this.shoppingList.push({
       name: "עגבניות",
     });
