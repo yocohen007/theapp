@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let listItem of modelService.getShoppingList()">
+    <ion-item *ngFor="let listItem of modelService.getShoppingList()" (click)="presentPopover($event, listItem.name)">
       <ion-icon name="clipboard" item-start></ion-icon>
       <ion-label>{{listItem.name}}</ion-label>
     </ion-item>

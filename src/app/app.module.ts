@@ -11,6 +11,7 @@ import { AddToDbPage } from '../pages/add-to-db/add-to-db';
 import { ModelService } from '../model/model-service';
 import { ProductsPage } from '../pages/products/products';
 import { AddToListPage } from '../pages/add-to-list/add-to-list';
+import { ListItemPopoverPage } from '../pages/list-item-popover/list-item-popover';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AddToListPage } from '../pages/add-to-list/add-to-list';
     HomePage,
     ProductsPage,
     AddToDbPage,
-    AddToListPage
+    AddToListPage,
+    ListItemPopoverPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { AddToListPage } from '../pages/add-to-list/add-to-list';
     HomePage,
     ProductsPage,
     AddToDbPage,
-    AddToListPage
+    AddToListPage,
+    ListItemPopoverPage
   ],
   providers: [
     StatusBar,

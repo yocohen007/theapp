@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, Modal } from 'ionic-angular';
+import { NavController, ModalController, Modal, PopoverController } from 'ionic-angular';
 import { AddToDbPage } from '../add-to-db/add-to-db';
 import { ModelService } from '../../model/model-service';
 import { AddToListPage } from '../add-to-list/add-to-list';
+import { ListItemPopoverPage } from '../list-item-popover/list-item-popover';
 
 @Component({
   selector: 'page-home',
@@ -10,7 +11,7 @@ import { AddToListPage } from '../add-to-list/add-to-list';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public modelService: ModelService, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public modelService: ModelService, public modalCtrl: ModalController, public popoverCtrl: PopoverController) {
   }
 
   navigateAddToDB(): void {
@@ -26,4 +27,10 @@ export class HomePage {
     profileModal.present();
   }
 
+  presentPopover(myEvent, itemName) {
+    let popover = this.popoverCtrl.create(ListItemPopoverPage, {ev:itemName});
+    popover.present({
+      ev: myEvent
+    });
+  }
 }
