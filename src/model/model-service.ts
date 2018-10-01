@@ -5,6 +5,7 @@ import { Injectable } from "@angular/core";
 export class ModelService {
   private products: any;
   private shoppingList: listItem[];
+  private readonly SHOPPING_LIST_STORAGE_KEY: string = "digitize.theapp.shoppingList";
 
   constructor(private storage: Storage) {
     console.log("constructor model-service");
@@ -25,8 +26,8 @@ export class ModelService {
   }
 
   addToShoppingList(product: string) {
-    this.shoppingList.push({product:{ name: product }});
-    this.storage.set('digitize.theapp.shoppingList', this.shoppingList);
+    this.shoppingList.push({ product: { name: product } });
+    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
   }
 
   markShoppingList(product: string): void {
@@ -35,7 +36,7 @@ export class ModelService {
       this.shoppingList[index].marked = !this.shoppingList[index].marked;
     }
     console.log(this.shoppingList);
-    this.storage.set('digitize.theapp.shoppingList', this.shoppingList);
+    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
   }
 
   deleteFromShoppingList(product: string): void {
@@ -44,26 +45,37 @@ export class ModelService {
       this.shoppingList.splice(index, 1);
     }
     console.log(this.shoppingList);
-    this.storage.set('digitize.theapp.shoppingList', this.shoppingList);
+    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
   }
 
-  private getIndexInShoppongList(product: string): number{
+  moveUp(product: string): void {
+    var index: number = this.getIndexInShoppongList(product);
+    this.shoppingList.splice(index -1, 0, this.shoppingList.splice(index, 1)[0]);
+    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
+  }
+
+  moveDown(product: string): void {
+    var index: number = this.getIndexInShoppongList(product);
+    this.shoppingList.splice(index + 1, 0, this.shoppingList.splice(index, 1)[0]);
+    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
+  }
+
+  private getIndexInShoppongList(product: string): number {
     for (var i: number = 0; i < this.shoppingList.length; i++) {
       if (this.shoppingList[i].product.name === product) {
         return i;
       }
     }
     return -1;
-  } 
+  }
   private prepareData(): void {
     //init
-    console.log('prepare data');
+    console.log("prepare data");
     this.prepareShoppingList();
     this.prepareProducts();
   }
 
-  prepareProducts(): void {
-  }
+  private prepareProducts(): void {}
 
   private prepareShoppingList(): void {
     // this.shoppingList = [];
@@ -72,13 +84,13 @@ export class ModelService {
     // });
     // storage.set('name', 'Max');
 
-    console.log('prepareShoppingLi');
-    this.shoppingList = [];   
-    this.storage.get('digitize.theapp.shoppingList').then((val) => {
+    console.log("prepareShoppingLi");
+    this.shoppingList = [];
+    this.storage.get(this.SHOPPING_LIST_STORAGE_KEY).then(val => {
       if (val != null) {
         this.shoppingList = val;
-      }  
-      console.log('shopping list is', val);
+      }
+      console.log("shopping list is", val);
     });
   }
 }

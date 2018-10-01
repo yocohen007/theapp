@@ -37,4 +37,12 @@ export class ListItemPopoverPage {
     this.modelService.markShoppingList(this.itemName);
     this.viewCtrl.dismiss();
   }
+
+  moveUp(): void {
+    this.modelService.moveUp(this.itemName);    
+  }
+
+  moveDown(): void {
+    this.modelService.moveDown(this.itemName);    
+  }
 }
