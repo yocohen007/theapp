@@ -28,7 +28,7 @@ export class HomePage {
   }
 
   presentPopover(myEvent, itemName) {
-    let popover = this.popoverCtrl.create(ListItemPopoverPage, {ev:itemName});
+    let popover = this.popoverCtrl.create(ListItemPopoverPage, {item:itemName});
     popover.present({
       ev: myEvent
     });

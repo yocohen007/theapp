@@ -1,3 +1,4 @@
 interface product {
-    name: string
+    name: string,
+    marked?: boolean
 }

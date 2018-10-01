@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { ModelService } from '../../model/model-service';
 
 /**
  * Generated class for the ListItemPopoverPage page.
@@ -14,10 +15,10 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   templateUrl: 'list-item-popover.html',
 })
 export class ListItemPopoverPage {
-  public itemName: any;
+  public itemName: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
-    this.itemName = navParams.get("ev");
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modelService: ModelService) {
+    this.itemName = navParams.get("item");
     console.log(this.itemName);
   }
 
@@ -25,8 +26,15 @@ export class ListItemPopoverPage {
     console.log('ionViewDidLoad ListItemPopoverPage');
   }
 
-  delete() {
+  delete(): void {
     console.log("delete " + this.itemName);
+    this.modelService.deleteFromShoppingList(this.itemName);
+    this.viewCtrl.dismiss();
+  }
+
+  mark(): void {
+    console.log("delete " + this.itemName);
+    this.modelService.markShoppingList(this.itemName);
     this.viewCtrl.dismiss();
   }
 }

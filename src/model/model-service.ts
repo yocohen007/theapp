@@ -26,14 +26,37 @@ export class ModelService {
   }
 
   addToShoppingList(product: string) {
-    this.shoppingList.push({"name":product});
+    this.shoppingList.push({ name: product });
   }
 
+  markShoppingList(product: string): void {
+    var index: number = this.getIndexInShoppongList(product);
+    if (index > -1) {
+      this.shoppingList[index].marked = !this.shoppingList[index].marked;
+    }
+    console.log(this.shoppingList);
+  }
+
+  deleteFromShoppingList(product: string): void {
+    var index: number = this.getIndexInShoppongList(product);
+    if (index > -1) {
+      this.shoppingList.splice(index, 1);
+    }
+    console.log(this.shoppingList);
+  }
+
+  private getIndexInShoppongList(product: string): number{
+    for (var i: number = 0; i < this.shoppingList.length; i++) {
+      if (this.shoppingList[i].name === product) {
+        return i;
+      }
+    }
+    return -1;
+  } 
   private prepareData(): void {
     //init
     this.prepareShoppingList();
     this.prepareProducts();
-
   }
 
   prepareProducts(): void {
@@ -49,7 +72,7 @@ export class ModelService {
   private prepareShoppingList(): void {
     this.shoppingList = [];
     this.shoppingList.push({
-      name: "עגבניות",
+      name: "עגבניות"
     });
   }
 }
