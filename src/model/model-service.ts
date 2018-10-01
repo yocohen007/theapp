@@ -2,7 +2,7 @@ import * as productsJson from "./products.json";
 
 export class ModelService {
   private products: any;
-  private shoppingList: product[];
+  private shoppingList: listItem[];
 
   constructor() {
     console.log("constructor model-service");
@@ -18,7 +18,7 @@ export class ModelService {
     return this.products;
   }
 
-  getShoppingList(): product[] {
+  getShoppingList(): listItem[] {
     if (this.shoppingList == null) {
       this.prepareData();
     }
@@ -26,7 +26,7 @@ export class ModelService {
   }
 
   addToShoppingList(product: string) {
-    this.shoppingList.push({ name: product });
+    this.shoppingList.push({product:{ name: product }});
   }
 
   markShoppingList(product: string): void {
@@ -47,7 +47,7 @@ export class ModelService {
 
   private getIndexInShoppongList(product: string): number{
     for (var i: number = 0; i < this.shoppingList.length; i++) {
-      if (this.shoppingList[i].name === product) {
+      if (this.shoppingList[i].product.name === product) {
         return i;
       }
     }
@@ -72,7 +72,7 @@ export class ModelService {
   private prepareShoppingList(): void {
     this.shoppingList = [];
     this.shoppingList.push({
-      name: "עגבניות"
+      product: {name: "עגבניות"}
     });
   }
 }
