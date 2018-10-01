@@ -1,14 +1,13 @@
-import * as productsJson from "./products.json";
+import { Storage } from "@ionic/storage";
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class ModelService {
   private products: any;
   private shoppingList: listItem[];
 
-  constructor() {
+  constructor(private storage: Storage) {
     console.log("constructor model-service");
-    this.products = productsJson;
-    // const word = data[0].name;
-    // console.dir(data); // output 'testing'
   }
 
   getProductList(): product[] {
@@ -27,6 +26,7 @@ export class ModelService {
 
   addToShoppingList(product: string) {
     this.shoppingList.push({product:{ name: product }});
+    this.storage.set('digitize.theapp.shoppingList', this.shoppingList);
   }
 
   markShoppingList(product: string): void {
@@ -35,6 +35,7 @@ export class ModelService {
       this.shoppingList[index].marked = !this.shoppingList[index].marked;
     }
     console.log(this.shoppingList);
+    this.storage.set('digitize.theapp.shoppingList', this.shoppingList);
   }
 
   deleteFromShoppingList(product: string): void {
@@ -43,6 +44,7 @@ export class ModelService {
       this.shoppingList.splice(index, 1);
     }
     console.log(this.shoppingList);
+    this.storage.set('digitize.theapp.shoppingList', this.shoppingList);
   }
 
   private getIndexInShoppongList(product: string): number{
@@ -55,24 +57,28 @@ export class ModelService {
   } 
   private prepareData(): void {
     //init
+    console.log('prepare data');
     this.prepareShoppingList();
     this.prepareProducts();
   }
 
   prepareProducts(): void {
-    // this.products = [];
-    // this.products.push({
-    //   name: "עגבניות",
-    // });
-    // this.products.push({
-    //   name: "מלפפונים",
-    // });
   }
 
   private prepareShoppingList(): void {
-    this.shoppingList = [];
-    this.shoppingList.push({
-      product: {name: "עגבניות"}
+    // this.shoppingList = [];
+    // this.shoppingList.push({
+    //   product: {name: "עגבניות"}
+    // });
+    // storage.set('name', 'Max');
+
+    console.log('prepareShoppingLi');
+    this.shoppingList = [];   
+    this.storage.get('digitize.theapp.shoppingList').then((val) => {
+      if (val != null) {
+        this.shoppingList = val;
+      }  
+      console.log('shopping list is', val);
     });
   }
 }

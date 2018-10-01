@@ -12,6 +12,7 @@ import { ModelService } from '../model/model-service';
 import { ProductsPage } from '../pages/products/products';
 import { AddToListPage } from '../pages/add-to-list/add-to-list';
 import { ListItemPopoverPage } from '../pages/list-item-popover/list-item-popover';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ListItemPopoverPage } from '../pages/list-item-popover/list-item-popove
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
