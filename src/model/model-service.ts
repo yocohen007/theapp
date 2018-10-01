@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class ModelService {
-  private products: any;
+  private products: product[];
   private shoppingList: listItem[];
   private readonly SHOPPING_LIST_STORAGE_KEY: string = "digitize.theapp.shoppingList";
 
@@ -75,7 +75,9 @@ export class ModelService {
     this.prepareProducts();
   }
 
-  private prepareProducts(): void {}
+  private prepareProducts(): void {
+    this.products = [];
+  }
 
   private prepareShoppingList(): void {
     // this.shoppingList = [];
@@ -84,7 +86,7 @@ export class ModelService {
     // });
     // storage.set('name', 'Max');
 
-    console.log("prepareShoppingLi");
+    console.log("prepareShoppingList");
     this.shoppingList = [];
     this.storage.get(this.SHOPPING_LIST_STORAGE_KEY).then(val => {
       if (val != null) {

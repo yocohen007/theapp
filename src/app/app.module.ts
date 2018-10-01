@@ -13,12 +13,14 @@ import { ProductsPage } from '../pages/products/products';
 import { AddToListPage } from '../pages/add-to-list/add-to-list';
 import { ListItemPopoverPage } from '../pages/list-item-popover/list-item-popover';
 import { IonicStorageModule } from '@ionic/storage';
+import { StoresPage } from '../pages/stores/stores';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ProductsPage,
+    StoresPage,
     AddToDbPage,
     AddToListPage,
     ListItemPopoverPage
@@ -33,6 +35,7 @@ import { IonicStorageModule } from '@ionic/storage';
     MyApp,
     HomePage,
     ProductsPage,
+    StoresPage,
     AddToDbPage,
     AddToListPage,
     ListItemPopoverPage
