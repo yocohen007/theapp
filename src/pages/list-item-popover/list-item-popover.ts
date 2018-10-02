@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { ModelService } from '../../model/model-service';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ViewController
+} from "ionic-angular";
+import { ModelService } from "../../model/model-service";
+import { TranslateService } from "@ngx-translate/core";
 
 /**
  * Generated class for the ListItemPopoverPage page.
@@ -11,19 +17,25 @@ import { ModelService } from '../../model/model-service';
 
 @IonicPage()
 @Component({
-  selector: 'page-list-item-popover',
-  templateUrl: 'list-item-popover.html',
+  selector: "page-list-item-popover",
+  templateUrl: "list-item-popover.html"
 })
 export class ListItemPopoverPage {
   public itemName: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modelService: ModelService) {
+  constructor(
+    public translate: TranslateService,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController,
+    public modelService: ModelService
+  ) {
     this.itemName = navParams.get("item");
     console.log(this.itemName);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ListItemPopoverPage');
+    console.log("ionViewDidLoad ListItemPopoverPage");
   }
 
   delete(): void {
@@ -39,10 +51,10 @@ export class ListItemPopoverPage {
   }
 
   moveUp(): void {
-    this.modelService.moveUp(this.itemName);    
+    this.modelService.moveUp(this.itemName);
   }
 
   moveDown(): void {
-    this.modelService.moveDown(this.itemName);    
+    this.modelService.moveDown(this.itemName);
   }
 }

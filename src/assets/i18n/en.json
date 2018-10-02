@@ -1,4 +1,10 @@
 {
   "TITLE_STORES": "Stores",
-  "TITLE_SETTINGS": "Settings"
+  "TITLE_SETTINGS": "Settings",
+  "TITLE_PRODUCTS": "Products",
+  "TITLE_SHOPPING_LIST": "Shopping List",
+  "MOVE_UP": "Move Up",
+  "MOVE_DOWN": "Move Down",
+  "MARK_ITEM": "Mark",
+  "DELETE_ITEM": "Delete"
 }

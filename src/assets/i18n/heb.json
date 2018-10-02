@@ -1,4 +1,10 @@
 {
   "TITLE_STORES": "חנויות",
-  "TITLE_SETTINGS": "הגדרות"
+  "TITLE_SETTINGS": "הגדרות",
+  "TITLE_PRODUCTS": "מוצרים",
+  "TITLE_SHOPPING_LIST": "רשימת קניות",
+  "MOVE_UP": "הזז למעלה",
+  "MOVE_DOWN": "הזז למטה",
+  "MARK_ITEM": "סמן",
+  "DELETE_ITEM": "מחק"
 }

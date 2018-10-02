@@ -1,21 +1,7 @@
-<!--
-  Generated template for the ListItemPopoverPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!-- <ion-header> -->
-
-  <!-- <ion-navbar>
-    <ion-title>listItemPopover</ion-title>
-  </ion-navbar> -->
-
-<!-- </ion-header> -->
-
 
 <ion-content>
-  <ion-item no-lines (click)="moveUp()">Move Up</ion-item>
-  <ion-item no-lines (click)="moveDown()">Move Down</ion-item>
-  <ion-item no-lines (click)="mark()">Mark Item</ion-item>
-  <ion-item no-lines (click)="delete()">Delete Item</ion-item>
+  <ion-item no-lines (click)="moveUp()">{{ "MOVE_UP" | translate }}</ion-item>
+  <ion-item no-lines (click)="moveDown()">{{ "MOVE_DOWN" | translate }}</ion-item>
+  <ion-item no-lines (click)="mark()">{{ "MARK_ITEM" | translate }}</ion-item>
+  <ion-item no-lines (click)="delete()">{{ "DELETE_ITEM" | translate }}</ion-item>
 </ion-content>

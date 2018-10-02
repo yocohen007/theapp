@@ -21,45 +21,16 @@ export class MyApp {
 
   constructor(translateService: TranslateService, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
-    translateService.setDefaultLang("en");
+    translateService.setDefaultLang("heb");
 
-    // let alertTitle: string ="";
-
-
-    translateService.get(["TITLE_STORES", "TITLE_SETTINGS"]).subscribe(translations => {
+    translateService.get(["TITLE_SHOPPING_LIST", "TITLE_STORES", "TITLE_SETTINGS", "TITLE_PRODUCTS"]).subscribe(translations => {
       this.pages= [
-        { title: "רשימת קניות", component: HomePage },
-        { title: "מוצרים", component: ProductsPage },
+        { title: translations.TITLE_SHOPPING_LIST, component: HomePage },
+        { title: translations.TITLE_PRODUCTS, component: ProductsPage },
         { title: translations.TITLE_STORES, component: StoresPage },
         { title: translations.TITLE_SETTINGS, component: SettingsPage },
       ];
     })
-
-
-
-
-
-
-
-
-
-
-    // used for an example of ngFor and navigation
-    // translateService.get("title.stores").subscribe(
-    //   value => {
-    //     // value is our translated string
-    //     console.log("translated:" + value);
-    //     alertTitle = value;
-    //   }
-    // )
-
-    // this.pages = [
-    //   { title: "רשימת קניות", component: HomePage },
-    //   { title: "מוצרים", component: ProductsPage },
-    //   { title: alertTitle, component: StoresPage },
-    //   { title: "הגדרות", component: SettingsPage },
-    // ];
-
   }
 
   initializeApp() {

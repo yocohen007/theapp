@@ -17,7 +17,7 @@ import { StoresPage } from "../pages/stores/stores";
 import { SettingsPage } from "../pages/settings/settings";
 import { TranslateModule, TranslateLoader} from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { Http, HttpModule } from "@angular/http";
+import { HttpModule } from "@angular/http";
 import { HttpClient, HttpClientModule  } from "@angular/common/http";
 
 export function createTranslateLoader(http: HttpClient) {
