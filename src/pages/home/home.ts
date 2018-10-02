@@ -23,7 +23,6 @@ export class HomePage {
     public modalCtrl: ModalController,
     public popoverCtrl: PopoverController
   ) {
-    translate.setDefaultLang("en");
   }
 
   navigateAddToDB(): void {

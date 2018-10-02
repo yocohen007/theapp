@@ -20,7 +20,6 @@ export class StoresPage {
     public navCtrl: NavController,
     public navParams: NavParams
   ) {
-    translate.setDefaultLang("en");
   }
 
   ionViewDidLoad() {

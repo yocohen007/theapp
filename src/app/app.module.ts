@@ -18,9 +18,11 @@ import { SettingsPage } from "../pages/settings/settings";
 import { TranslateModule, TranslateLoader} from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { Http, HttpModule } from "@angular/http";
-import { HttpClient  } from "@angular/common/http";
+import { HttpClient, HttpClientModule  } from "@angular/common/http";
 
 export function createTranslateLoader(http: HttpClient) {
+  console.log("createTranslateLoader1");
+  console.log(http);
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
@@ -37,6 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   imports: [
     HttpModule,
+    HttpClientModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
@@ -44,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
       loader: {
         provide: TranslateLoader,
         useFactory: (createTranslateLoader),
-        deps: [Http]
+        deps: [HttpClient]
       }
     })
   ],
