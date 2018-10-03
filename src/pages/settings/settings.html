@@ -17,5 +17,11 @@
 
 
 <ion-content padding>
-
+  <ion-item>
+    <ion-label>{{ "LANGUAGE" | translate }}</ion-label>
+    <ion-select [(ngModel)]="lang" (ionChange)="onLangChange($event)">
+      <ion-option value="heb">עברית</ion-option>
+      <ion-option value="en">English</ion-option>
+    </ion-select>
+  </ion-item>
 </ion-content>

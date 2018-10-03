@@ -6,5 +6,6 @@
   "MOVE_UP": "Move Up",
   "MOVE_DOWN": "Move Down",
   "MARK_ITEM": "Mark",
-  "DELETE_ITEM": "Delete"
+  "DELETE_ITEM": "Delete",
+  "LANGUAGE": "Language"
 }

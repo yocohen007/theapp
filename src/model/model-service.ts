@@ -84,7 +84,7 @@ export class ModelService {
     // this.shoppingList.push({
     //   product: {name: "עגבניות"}
     // });
-    // storage.set('name', 'Max');
+    // storage.set("name", "Max");
 
     console.log("prepareShoppingList");
     this.shoppingList = [];
