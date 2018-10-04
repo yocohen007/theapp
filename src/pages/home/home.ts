@@ -40,9 +40,9 @@ export class HomePage {
     profileModal.present();
   }
 
-  presentPopover(myEvent, itemName) {
+  presentPopover(myEvent, listItem: listItem) {
     let popover = this.popoverCtrl.create(ListItemPopoverPage, {
-      item: itemName
+      item: listItem
     });
     popover.present({
       ev: myEvent

@@ -3,66 +3,106 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class ModelService {
-  private products: product[];
-  private shoppingList: listItem[];
-  private readonly SHOPPING_LIST_STORAGE_KEY: string = "digitize.theapp.shoppingList";
+  private database: database;
+  private readonly DATABASE_STORAGE_KEY: string = "digitize.theapp.database";
 
   constructor(private storage: Storage) {
     console.log("constructor model-service");
   }
 
   getProductList(): product[] {
-    if (this.products == null) {
+    if (this.database == null) {
       this.prepareData();
     }
-    return this.products;
+    return this.database.products;
   }
 
   getShoppingList(): listItem[] {
-    if (this.shoppingList == null) {
+    if (this.database == null) {
       this.prepareData();
     }
-    return this.shoppingList;
+    return this.database.shoppingList;
   }
 
-  addToShoppingList(product: string) {
-    this.shoppingList.push({ product: { name: product } });
-    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
+  addToShoppingList(productName: string) {
+    let product: product = this.getOrCreateProduct(productName);
+    this.database.shoppingList.push({ product_id: product.id });
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
   }
 
-  markShoppingList(product: string): void {
-    var index: number = this.getIndexInShoppongList(product);
-    if (index > -1) {
-      this.shoppingList[index].marked = !this.shoppingList[index].marked;
+  getOrCreateProduct(productName: string): product {
+    let product: product = this.getProductFromProductsList(productName);
+    if (product == null) {
+      let maxId = -1;
+      for (var i: number = 0; i < this.database.products.length; i++) {
+        if (this.database.products[i].id > maxId) {
+          maxId = this.database.products[i].id;
+        }
+      }
+      product = { id: maxId + 1, name: productName };
+      this.database.products.push(product);
+      this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
     }
-    console.log(this.shoppingList);
-    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
+    return product;
   }
 
-  deleteFromShoppingList(product: string): void {
-    var index: number = this.getIndexInShoppongList(product);
-    if (index > -1) {
-      this.shoppingList.splice(index, 1);
+  getProductFromProductsList(productName: string): product {
+    for (var i: number = 0; i < this.database.products.length; i++) {
+      if (this.database.products[i].name === productName) {
+        return this.database.products[i];
+      }
     }
-    console.log(this.shoppingList);
-    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
   }
 
-  moveUp(product: string): void {
-    var index: number = this.getIndexInShoppongList(product);
-    this.shoppingList.splice(index -1, 0, this.shoppingList.splice(index, 1)[0]);
-    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
+  markShoppingListItem(listItem: listItem): void {
+    var index: number = this.getIndexInShoppongList(listItem.product_id);
+    if (index > -1) {
+      this.database.shoppingList[index].marked = !this.database.shoppingList[index].marked;
+    }
+    console.log(this.database.shoppingList);
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
   }
 
-  moveDown(product: string): void {
-    var index: number = this.getIndexInShoppongList(product);
-    this.shoppingList.splice(index + 1, 0, this.shoppingList.splice(index, 1)[0]);
-    this.storage.set(this.SHOPPING_LIST_STORAGE_KEY, this.shoppingList);
+  deleteFromShoppingList(listItem: listItem): void {
+    var index: number = this.getIndexInShoppongList(listItem.product_id);
+    if (index > -1) {
+      this.database.shoppingList.splice(index, 1);
+    }
+    console.log(this.database.shoppingList);
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
   }
 
-  private getIndexInShoppongList(product: string): number {
-    for (var i: number = 0; i < this.shoppingList.length; i++) {
-      if (this.shoppingList[i].product.name === product) {
+  moveUp(listItem: listItem): void {
+    var index: number = this.getIndexInShoppongList(listItem.product_id);
+    this.database.shoppingList.splice(
+      index - 1,
+      0,
+      this.database.shoppingList.splice(index, 1)[0]
+    );
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+  }
+
+  moveDown(listItem: listItem): void {
+    var index: number = this.getIndexInShoppongList(listItem.product_id);
+    this.database.shoppingList.splice(
+      index + 1,
+      0,
+      this.database.shoppingList.splice(index, 1)[0]
+    );
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+  }
+
+  getProductName(id: number): string {
+    for (var i: number = 0; i < this.database.products.length; i++) {
+      if (this.database.products[i].id === id) {
+        return this.database.products[i].name;
+      }
+    }
+  }
+
+  private getIndexInShoppongList(productId: number): number {
+    for (var i: number = 0; i < this.database.shoppingList.length; i++) {
+      if (this.database.shoppingList[i].product_id === productId) {
         return i;
       }
     }
@@ -71,28 +111,24 @@ export class ModelService {
   private prepareData(): void {
     //init
     console.log("prepare data");
-    this.prepareShoppingList();
-    this.prepareProducts();
-  }
-
-  private prepareProducts(): void {
-    this.products = [];
-  }
-
-  private prepareShoppingList(): void {
-    // this.shoppingList = [];
-    // this.shoppingList.push({
-    //   product: {name: "עגבניות"}
-    // });
-    // storage.set("name", "Max");
-
-    console.log("prepareShoppingList");
-    this.shoppingList = [];
-    this.storage.get(this.SHOPPING_LIST_STORAGE_KEY).then(val => {
+    console.log("prepareProducts");
+    this.database = {
+      version: 0,
+      products: [],
+      stores: [],
+      shoppingList: [],
+      storeOrders: []
+    };
+    // this.storage.remove(this.PRODUCTS_STORAGE_KEY);
+    this.storage.get(this.DATABASE_STORAGE_KEY).then(val => {
       if (val != null) {
-        this.shoppingList = val;
+        this.database = val;
+        if (this.database.version == null) {
+          this.database.version = 0;
+          this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+        }
       }
-      console.log("shopping list is", val);
+      console.log("db is", val);
     });
   }
 }

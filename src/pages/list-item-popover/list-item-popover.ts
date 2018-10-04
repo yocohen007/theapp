@@ -21,7 +21,7 @@ import { TranslateService } from "@ngx-translate/core";
   templateUrl: "list-item-popover.html"
 })
 export class ListItemPopoverPage {
-  public itemName: string;
+  public listItem: listItem;
 
   constructor(
     public translate: TranslateService,
@@ -30,8 +30,8 @@ export class ListItemPopoverPage {
     public viewCtrl: ViewController,
     public modelService: ModelService
   ) {
-    this.itemName = navParams.get("item");
-    console.log(this.itemName);
+    this.listItem = navParams.get("item");
+    console.log(this.listItem);
   }
 
   ionViewDidLoad() {
@@ -39,22 +39,22 @@ export class ListItemPopoverPage {
   }
 
   delete(): void {
-    console.log("delete " + this.itemName);
-    this.modelService.deleteFromShoppingList(this.itemName);
+    console.log("delete " + this.listItem);
+    this.modelService.deleteFromShoppingList(this.listItem);
     this.viewCtrl.dismiss();
   }
 
   mark(): void {
-    console.log("delete " + this.itemName);
-    this.modelService.markShoppingList(this.itemName);
+    console.log("delete " + this.listItem.product_id);
+    this.modelService.markShoppingListItem(this.listItem);
     this.viewCtrl.dismiss();
   }
 
   moveUp(): void {
-    this.modelService.moveUp(this.itemName);
+    this.modelService.moveUp(this.listItem);
   }
 
   moveDown(): void {
-    this.modelService.moveDown(this.itemName);
+    this.modelService.moveDown(this.listItem);
   }
 }
