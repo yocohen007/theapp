@@ -23,15 +23,15 @@
     <ion-fab-list side="top">
       <button ion-fab (click)="presentAddToListPageModal()">
         <ion-icon name="basket"></ion-icon>
-        <ion-label>פריט לרשימה</ion-label>
+        <ion-label>{{"NEW_ITEM" | translate}}</ion-label>
       </button>
       <button ion-fab (click)="navigateAddToDB()">
         <ion-icon name="filing"></ion-icon>
-        <ion-label>פריט לבסיס נתונים</ion-label>
+        <ion-label>{{"NEW_PRODUCT" | translate}}</ion-label>
       </button>
       <button ion-fab (click)="openSocial('vimeo', fab4)">
         <ion-icon name="cart"></ion-icon>
-        <ion-label>חנות</ion-label>
+        <ion-label>{{"NEW_STORE" | translate}}</ion-label>
       </button>
     </ion-fab-list>
   </ion-fab>

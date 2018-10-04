@@ -7,5 +7,8 @@
   "MOVE_DOWN": "Move Down",
   "MARK_ITEM": "Mark",
   "DELETE_ITEM": "Delete",
-  "LANGUAGE": "Language"
+  "LANGUAGE": "Language",
+  "NEW_STORE": "New Store",
+  "NEW_PRODUCT": "New Product",
+  "NEW_ITEM": "Add to List"
 }

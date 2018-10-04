@@ -7,5 +7,8 @@
   "MOVE_DOWN": "הזז למטה",
   "MARK_ITEM": "סמן",
   "DELETE_ITEM": "מחק",
-  "LANGUAGE": "שפה"
+  "LANGUAGE": "שפה",
+  "NEW_STORE": "חנות חדשה",
+  "NEW_PRODUCT": "מוצר חדש",
+  "NEW_ITEM": "פריט לרשימה"
 }
