@@ -35,7 +35,10 @@ export class HomePage {
     });
     profileModal.onDidDismiss(data => {
       console.log(data);
-      this.modelService.addToShoppingList(data.foo);
+      let newItem = data.itemName;
+      if (newItem != null) {
+        this.modelService.addToShoppingList(newItem);
+      }
     });
     profileModal.present();
   }

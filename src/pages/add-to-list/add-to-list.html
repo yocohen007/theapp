@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>addToList</ion-title>
+    <ion-title>{{"NEW_ITEM" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,8 +15,11 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-label color="primary">?:</ion-label>
+    <ion-label color="primary">{{"ITEM" | translate}}:</ion-label>
     <ion-input [(ngModel)]="product" placeholder="Text Input"></ion-input>
   </ion-item>
-  <button ion-button color="danger" full (click)="dismiss()">Dismiss</button>
-</ion-content>
+  <ion-item>
+  <button ion-button color="danger" full (click)="dismiss()">OK</button>
+  <button ion-button color="danger" full (click)="cancel()">Cancel</button>
+  </ion-item>
+  </ion-content>

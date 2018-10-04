@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
 
 /**
  * Generated class for the AddToListPage page.
@@ -10,8 +10,8 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 
 @IonicPage()
 @Component({
-  selector: 'page-add-to-list',
-  templateUrl: 'add-to-list.html',
+  selector: "page-add-to-list",
+  templateUrl: "add-to-list.html",
 })
 export class AddToListPage {
   public product: string = "";
@@ -20,11 +20,16 @@ export class AddToListPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddToListPage');
+    console.log("ionViewDidLoad AddToListPage");
   }
 
-  dismiss() {
-    let data = { 'foo': this.product };
+  dismiss(): void {
+    let data = { "itemName": this.product };
+    this.viewCtrl.dismiss(data);
+  }
+
+  cancel(): void {
+    let data = { "itemName": null };
     this.viewCtrl.dismiss(data);
   }
 }
