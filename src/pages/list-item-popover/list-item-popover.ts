@@ -7,6 +7,7 @@ import {
 } from "ionic-angular";
 import { ModelService } from "../../model/model-service";
 import { TranslateService } from "@ngx-translate/core";
+import { listItem } from "../../common/interfaces";
 
 /**
  * Generated class for the ListItemPopoverPage page.

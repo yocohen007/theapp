@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { ModelService } from "../../model/model-service";
 import { TranslateService } from "@ngx-translate/core";
+import { product } from "../../common/interfaces";
 
 @Component({
   selector: "page-products",

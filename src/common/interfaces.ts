@@ -1,28 +1,24 @@
-interface product {
+import { StoreOrder } from "./store-order";
+
+export interface product {
     id: number,
     name: string,
 }
 
-interface listItem {
+export interface listItem {
     product_id: number,
     marked?: boolean
 }
 
-interface store {
+export interface store {
     id: number,
     name: string
 }
 
-interface storeOrder {
-    store_id: number,
-    product_id: number,
-    order: number
-}
-
-interface database {
+export interface database {
     version: number,
     products?: product[],
     shoppingList?: listItem[],
     stores?: store[],
-    storeOrders?: storeOrder[]
+    storeOrders: {}
 }
