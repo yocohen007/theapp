@@ -2,14 +2,14 @@ import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { ModelService } from "../../model/model-service";
 import { TranslateService } from "@ngx-translate/core";
-import { product } from "../../common/interfaces";
+import { Product } from "../../common/interfaces";
 
 @Component({
   selector: "page-products",
   templateUrl: "products.html"
 })
 export class ProductsPage {
-  selectedItem: product;
+  selectedItem: Product;
   icons: string[];
 
   constructor(

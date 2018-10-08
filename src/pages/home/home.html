@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let listItem of modelService.getOrderedShoppingList(-1)" (click)="presentPopover($event, listItem)">
+    <ion-item *ngFor="let listItem of modelService.getOrderedShoppingList(0)" (click)="presentPopover($event, listItem)">
       <ion-icon name="clipboard" item-start></ion-icon>
       <ion-label [style.text-decoration]="listItem.marked ? 'line-through' : ''">{{modelService.getProductName(listItem.product_id)}}</ion-label>
     </ion-item>

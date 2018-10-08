@@ -10,7 +10,7 @@ import { ModelService } from "../../model/model-service";
 import { AddToListPage } from "../add-to-list/add-to-list";
 import { ListItemPopoverPage } from "../list-item-popover/list-item-popover";
 import { TranslateService } from "@ngx-translate/core";
-import { listItem } from "../../common/interfaces";
+import { ListItem } from "../../common/interfaces";
 
 @Component({
   selector: "page-home",
@@ -44,7 +44,7 @@ export class HomePage {
     profileModal.present();
   }
 
-  presentPopover(myEvent, listItem: listItem) {
+  presentPopover(myEvent, listItem: ListItem) {
     let popover = this.popoverCtrl.create(ListItemPopoverPage, {
       item: listItem
     });

@@ -1,20 +1,20 @@
 import { Storage } from "@ionic/storage";
 import { Injectable } from "@angular/core";
-import { database, product, listItem } from "../common/interfaces";
+import { Database, Product, ListItem } from "../common/interfaces";
 import { StoreOrder } from "../common/store-order";
 
 @Injectable()
 export class ModelService {
-  private database: database;
+  private database: Database;
   private readonly DATABASE_STORAGE_KEY: string = "digitize.theapp.database";
   private storeOrder: StoreOrder;
-  private orderedListCache: listItem[];
+  private orderedListCache: ListItem[];
 
   constructor(private storage: Storage) {
     console.log("constructor model-service");
   }
 
-  getProductList(): product[] {
+  getProductList(): Product[] {
     if (this.database == null) {
       this.prepareData();
     }
@@ -28,7 +28,7 @@ export class ModelService {
   //   return this.database.shoppingList;
   // }
 
-  getOrderedShoppingList(store_id: number): listItem[] {
+  getOrderedShoppingList(store_id: number): ListItem[] {
     console.log("getOrderedShoppingList for " + store_id)
     if (this.database == null) {
       this.prepareData();
@@ -68,14 +68,59 @@ export class ModelService {
   }
 
   addToShoppingList(productName: string) {
-    let product: product = this.getOrCreateProduct(productName);
+    let product: Product = this.getOrCreateProduct(productName);
     this.database.shoppingList.push({ product_id: product.id });
-    this.orderedListCache = null;
+    this.resetCache(true);
     this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
   }
 
-  getOrCreateProduct(productName: string): product {
-    let product: product = this.getProductFromProductsList(productName);
+  markShoppingListItem(listItem: ListItem): void {
+    var index: number = this.getIndexInShoppongList(listItem.product_id);
+    if (index > -1) {
+      this.database.shoppingList[index].marked = !this.database.shoppingList[index].marked;
+    }
+    console.log(this.database.shoppingList);
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+  }
+
+  deleteFromShoppingList(listItem: ListItem): void {
+    var index: number = this.getIndexInShoppongList(listItem.product_id);
+    if (index > -1) {
+      this.database.shoppingList.splice(index, 1);
+    }
+    this.resetCache(true);
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+  }
+
+  moveUp(listItem: ListItem, store_id: number = 0): void {
+    this.moveItem(listItem, store_id, true);
+  }
+
+  moveDown(listItem: ListItem, store_id: number = 0): void {
+    this.moveItem(listItem, store_id, false);
+  }
+
+  getProductName(id: number): string {
+    for (var i: number = 0; i < this.database.products.length; i++) {
+      if (this.database.products[i].id === id) {
+        return this.database.products[i].name;
+      }
+    }
+  }
+
+  private moveItem(listItem: ListItem, store_id: number = 0, up: boolean): void {
+    let storeOrder: StoreOrder = this.getStoreOrder(store_id);
+    var index: number = this.getIndexInOrderedShoppongList(listItem.product_id);
+    let newIndex = up ? index -1 : index + 1;
+    let replacedProductId: number = this.orderedListCache[newIndex].product_id;
+    storeOrder.moveItem(listItem.product_id, replacedProductId);
+    this.resetCache();
+    this.database.storeOrders[store_id] = storeOrder.getOrder();
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+  }
+
+  private getOrCreateProduct(productName: string): Product {
+    let product: Product = this.getProductFromProductsList(productName);
     if (product == null) {
       //find correct id
       let maxId = -1;
@@ -90,61 +135,16 @@ export class ModelService {
       }
       this.database.storeOrders[0].push(product.id);
       this.database.products.push(product);
+      this.resetCache();
       this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
     }
     return product;
   }
 
-  getProductFromProductsList(productName: string): product {
+  private getProductFromProductsList(productName: string): Product {
     for (var i: number = 0; i < this.database.products.length; i++) {
       if (this.database.products[i].name === productName) {
         return this.database.products[i];
-      }
-    }
-  }
-
-  markShoppingListItem(listItem: listItem): void {
-    var index: number = this.getIndexInShoppongList(listItem.product_id);
-    if (index > -1) {
-      this.database.shoppingList[index].marked = !this.database.shoppingList[index].marked;
-    }
-    console.log(this.database.shoppingList);
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
-  }
-
-  deleteFromShoppingList(listItem: listItem): void {
-    var index: number = this.getIndexInShoppongList(listItem.product_id);
-    if (index > -1) {
-      this.database.shoppingList.splice(index, 1);
-    }
-    this.orderedListCache = null;
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
-  }
-
-  moveUp(listItem: listItem): void {
-    var index: number = this.getIndexInShoppongList(listItem.product_id);
-    this.database.shoppingList.splice(
-      index - 1,
-      0,
-      this.database.shoppingList.splice(index, 1)[0]
-    );
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
-  }
-
-  moveDown(listItem: listItem): void {
-    var index: number = this.getIndexInShoppongList(listItem.product_id);
-    this.database.shoppingList.splice(
-      index + 1,
-      0,
-      this.database.shoppingList.splice(index, 1)[0]
-    );
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
-  }
-
-  getProductName(id: number): string {
-    for (var i: number = 0; i < this.database.products.length; i++) {
-      if (this.database.products[i].id === id) {
-        return this.database.products[i].name;
       }
     }
   }
@@ -157,6 +157,16 @@ export class ModelService {
     }
     return -1;
   }
+  
+  private getIndexInOrderedShoppongList(productId: number): number {
+    for (var i: number = 0; i < this.orderedListCache.length; i++) {
+      if (this.orderedListCache[i].product_id === productId) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  
   private prepareData(): void {
     //init
     console.log("prepare data");
@@ -179,5 +189,12 @@ export class ModelService {
       }
       console.log("db is", val);
     });
+  }
+
+  private resetCache(onlyListReset: boolean = false): void {
+    this.orderedListCache = null;
+    if (!onlyListReset) {
+      this.storeOrder = null;
+    }
   }
 }

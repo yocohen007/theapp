@@ -7,7 +7,7 @@ import {
 } from "ionic-angular";
 import { ModelService } from "../../model/model-service";
 import { TranslateService } from "@ngx-translate/core";
-import { listItem } from "../../common/interfaces";
+import { ListItem } from "../../common/interfaces";
 
 /**
  * Generated class for the ListItemPopoverPage page.
@@ -22,7 +22,7 @@ import { listItem } from "../../common/interfaces";
   templateUrl: "list-item-popover.html"
 })
 export class ListItemPopoverPage {
-  public listItem: listItem;
+  public listItem: ListItem;
 
   constructor(
     public translate: TranslateService,
