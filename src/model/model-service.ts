@@ -1,6 +1,6 @@
 import { Storage } from "@ionic/storage";
 import { Injectable } from "@angular/core";
-import { Database, Product, ListItem } from "../common/interfaces";
+import { Database, Product, ListItem, Store } from "../common/interfaces";
 import { StoreOrder } from "../common/store-order";
 
 @Injectable()
@@ -12,6 +12,7 @@ export class ModelService {
 
   constructor(private storage: Storage) {
     console.log("constructor model-service");
+    this.prepareData();
   }
 
   getProductList(): Product[] {
@@ -19,6 +20,13 @@ export class ModelService {
       this.prepareData();
     }
     return this.database.products;
+  }
+
+  getStoresList(): Store[] {
+    if (this.database == null) {
+      this.prepareData();
+    }
+    return this.database.stores;
   }
 
   // getShoppingList(): listItem[] {
@@ -174,7 +182,7 @@ export class ModelService {
     this.database = {
       version: 0,
       products: [],
-      stores: [],
+      stores: [{id:1,name:"רמי לוי"},{id:2,name:"דוכן"}],
       shoppingList: [],
       storeOrders: {}
     };
