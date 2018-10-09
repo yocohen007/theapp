@@ -23,6 +23,7 @@ import { ListItem } from "../../common/interfaces";
 })
 export class ListItemPopoverPage {
   public listItem: ListItem;
+  store: number;
 
   constructor(
     public translate: TranslateService,
@@ -32,6 +33,7 @@ export class ListItemPopoverPage {
     public modelService: ModelService
   ) {
     this.listItem = navParams.get("item");
+    this.store = navParams.get("store");
     console.log(this.listItem);
   }
 
@@ -52,10 +54,10 @@ export class ListItemPopoverPage {
   }
 
   moveUp(): void {
-    this.modelService.moveUp(this.listItem);
+    this.modelService.moveUp(this.listItem, this.store);
   }
 
   moveDown(): void {
-    this.modelService.moveDown(this.listItem);
+    this.modelService.moveDown(this.listItem, this.store);
   }
 }

@@ -16,31 +16,19 @@ export class ModelService {
   }
 
   getProductList(): Product[] {
-    if (this.database == null) {
-      this.prepareData();
-    }
-    return this.database.products;
+    return this.database.products.slice();
   }
 
   getStoresList(): Store[] {
-    if (this.database == null) {
-      this.prepareData();
-    }
-    return this.database.stores;
+    return this.database.stores.slice();
   }
 
   // getShoppingList(): listItem[] {
-  //   if (this.database == null) {
-  //     this.prepareData();
-  //   }
-  //   return this.database.shoppingList;
+  //   return this.database.shoppingList.slice();
   // }
 
   getOrderedShoppingList(store_id: number): ListItem[] {
-    console.log("getOrderedShoppingList for " + store_id)
-    if (this.database == null) {
-      this.prepareData();
-    }
+    // console.log("getOrderedShoppingList for " + store_id)
     if (this.orderedListCache != null && this.storeOrder != null && this.storeOrder.getStoreId() == store_id) {
       return this.orderedListCache;
     }
@@ -64,7 +52,14 @@ export class ModelService {
     }
     var order: number[] = this.database.storeOrders[store_id];
     if (order == null && store_id != 0) {
-      return this.getStoreOrder(0);
+      if (this.isStoreExist(store_id)) {
+        //create new store order
+        order = this.database.storeOrders[0].slice();
+        this.database.storeOrders[store_id] = order;
+        this.persistDB();
+      } else {
+        return this.getStoreOrder(0);
+      }
     }
     if (order == null) {
       order = [];
@@ -75,11 +70,20 @@ export class ModelService {
     return storeOrder;
   }
 
+  isStoreExist(store_id: number): boolean {
+    for (var i: number = 0; i < this.database.stores.length; i++) {
+      if (this.database.stores[i].id === store_id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   addToShoppingList(productName: string) {
     let product: Product = this.getOrCreateProduct(productName);
     this.database.shoppingList.push({ product_id: product.id });
     this.resetCache(true);
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+    this.persistDB();
   }
 
   markShoppingListItem(listItem: ListItem): void {
@@ -88,7 +92,7 @@ export class ModelService {
       this.database.shoppingList[index].marked = !this.database.shoppingList[index].marked;
     }
     console.log(this.database.shoppingList);
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+    this.persistDB();
   }
 
   deleteFromShoppingList(listItem: ListItem): void {
@@ -97,7 +101,7 @@ export class ModelService {
       this.database.shoppingList.splice(index, 1);
     }
     this.resetCache(true);
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+    this.persistDB();
   }
 
   moveUp(listItem: ListItem, store_id: number = 0): void {
@@ -117,14 +121,16 @@ export class ModelService {
   }
 
   private moveItem(listItem: ListItem, store_id: number = 0, up: boolean): void {
+    console.log("moveItem " + store_id);
+    console.dir(listItem);
     let storeOrder: StoreOrder = this.getStoreOrder(store_id);
     var index: number = this.getIndexInOrderedShoppongList(listItem.product_id);
-    let newIndex = up ? index -1 : index + 1;
+    let newIndex = up ? index - 1 : index + 1;
     let replacedProductId: number = this.orderedListCache[newIndex].product_id;
     storeOrder.moveItem(listItem.product_id, replacedProductId);
     this.resetCache();
     this.database.storeOrders[store_id] = storeOrder.getOrder();
-    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+    this.persistDB();
   }
 
   private getOrCreateProduct(productName: string): Product {
@@ -141,10 +147,15 @@ export class ModelService {
       if (this.database.storeOrders[0] == null) {
         this.database.storeOrders[0] = [];
       }
-      this.database.storeOrders[0].push(product.id);
       this.database.products.push(product);
+      for (i = 0; i < this.database.stores.length; i++) {
+        if (this.database.storeOrders[this.database.stores[i].id] != null) {
+          this.database.storeOrders[this.database.stores[i].id].push(product.id);
+        }
+      }
+      this.database.storeOrders[0].push(product.id);
       this.resetCache();
-      this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
+      this.persistDB();
     }
     return product;
   }
@@ -165,7 +176,7 @@ export class ModelService {
     }
     return -1;
   }
-  
+
   private getIndexInOrderedShoppongList(productId: number): number {
     for (var i: number = 0; i < this.orderedListCache.length; i++) {
       if (this.orderedListCache[i].product_id === productId) {
@@ -174,15 +185,12 @@ export class ModelService {
     }
     return -1;
   }
-  
+
   private prepareData(): void {
-    //init
-    console.log("prepare data");
-    console.log("prepareProducts");
     this.database = {
       version: 0,
       products: [],
-      stores: [{id:1,name:"רמי לוי"},{id:2,name:"דוכן"}],
+      stores: [{ id: 1, name: "רמי לוי" }, { id: 2, name: "דוכן" }],
       shoppingList: [],
       storeOrders: {}
     };
@@ -192,11 +200,16 @@ export class ModelService {
         this.database = val;
         if (this.database.version == null) {
           this.database.version = 0;
-          this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
         }
       }
+      this.persistDB();
+      this.resetCache();
       console.log("db is", val);
     });
+  }
+
+  private persistDB() {
+    this.storage.set(this.DATABASE_STORAGE_KEY, this.database);
   }
 
   private resetCache(onlyListReset: boolean = false): void {
