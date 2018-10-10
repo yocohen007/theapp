@@ -39,22 +39,18 @@ export class HomePage {
     });
   }
 
-  navigateAddToDB(): void {
-    this.navCtrl.push(AddToDbPage);
-  }
-
   presentAddToListPageModal(): void {
-    let profileModal: Modal = this.modalCtrl.create(AddToListPage, {
+    let addToListModal: Modal = this.modalCtrl.create(AddToListPage, {
       userId: 8675309
     });
-    profileModal.onDidDismiss(data => {
+    addToListModal.onDidDismiss(data => {
       console.log(data);
       let newItem = data.itemName;
       if (newItem != null) {
         this.modelService.addToShoppingList(newItem);
       }
     });
-    profileModal.present();
+    addToListModal.present();
   }
 
   presentPopover(myEvent, listItem: ListItem) {

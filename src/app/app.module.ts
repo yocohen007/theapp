@@ -19,6 +19,7 @@ import { TranslateModule, TranslateLoader} from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { HttpModule } from "@angular/http";
 import { HttpClient, HttpClientModule  } from "@angular/common/http";
+import { AddStorePage } from "../pages/add-store/add-store";
 
 export function createTranslateLoader(http: HttpClient) {
   console.log("createTranslateLoader1");
@@ -35,6 +36,7 @@ export function createTranslateLoader(http: HttpClient) {
     SettingsPage,
     AddToDbPage,
     AddToListPage,
+    AddStorePage,
     ListItemPopoverPage
   ],
   imports: [
@@ -60,6 +62,7 @@ export function createTranslateLoader(http: HttpClient) {
     SettingsPage,
     AddToDbPage,
     AddToListPage,
+    AddStorePage,
     ListItemPopoverPage
   ],
   providers: [

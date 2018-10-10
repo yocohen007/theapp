@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Modal, ModalController } from "ionic-angular";
 import { TranslateService } from "@ngx-translate/core";
 import { ModelService } from "../../model/model-service";
+import { AddStorePage } from "../add-store/add-store";
 
 /**
  * Generated class for the StoresPage page.
@@ -20,11 +21,26 @@ export class StoresPage {
     public translate: TranslateService,
     public navCtrl: NavController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     public modelService: ModelService
   ) {
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad StoresPage");
+  }
+
+  presentAddStorePageModal(): void {
+    let addStoreModal: Modal = this.modalCtrl.create(AddStorePage, {
+      userId: 8675309
+    });
+    addStoreModal.onDidDismiss(data => {
+      console.log(data);
+      let newItem = data.itemName;
+      if (newItem != null) {
+        this.modelService.addStore(newItem);
+      }
+    });
+    addStoreModal.present();
   }
 }

@@ -86,6 +86,18 @@ export class ModelService {
     this.persistDB();
   }
 
+  public addProduct(productName: string) {
+    this.getOrCreateProduct(productName);
+    this.resetCache(true);
+    this.persistDB();
+  }
+
+  public addStore(storeName: string) {
+    this.getOrCreateStore(storeName);
+    this.resetCache(true);
+    this.persistDB();
+  }
+
   markShoppingListItem(listItem: ListItem): void {
     var index: number = this.getIndexInShoppongList(listItem.product_id);
     if (index > -1) {
@@ -160,10 +172,39 @@ export class ModelService {
     return product;
   }
 
+  private getOrCreateStore(storeName: string): Store {
+    let store: Store = this.getStoreFromStoresList(storeName);
+    if (store == null) {
+      //find correct id
+      let maxId = -1;
+      for (var i: number = 0; i < this.database.stores.length; i++) {
+        if (this.database.stores[i].id > maxId) {
+          maxId = this.database.stores[i].id;
+        }
+      }
+      store = { id: maxId + 1, name: storeName };
+      if (this.database.storeOrders[0] == null) {
+        this.database.storeOrders[0] = [];
+      }
+      this.database.stores.push(store);
+      this.resetCache();
+      this.persistDB();
+    }
+    return store;
+  }
+
   private getProductFromProductsList(productName: string): Product {
     for (var i: number = 0; i < this.database.products.length; i++) {
       if (this.database.products[i].name === productName) {
         return this.database.products[i];
+      }
+    }
+  }
+
+  private getStoreFromStoresList(storeName: string): Store {
+    for (var i: number = 0; i < this.database.stores.length; i++) {
+      if (this.database.stores[i].name === storeName) {
+        return this.database.stores[i];
       }
     }
   }

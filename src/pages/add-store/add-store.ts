@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
- * Generated class for the AddToDbPage page.
+ * Generated class for the AddStorePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,21 +10,21 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 
 @IonicPage()
 @Component({
-  selector: 'page-add-to-db',
-  templateUrl: 'add-to-db.html',
+  selector: 'page-add-store',
+  templateUrl: 'add-store.html',
 })
-export class AddToDbPage {
-  public product: string = "";
+export class AddStorePage {
+  public store: string = "";
 
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddToDbPage');
+    console.log('ionViewDidLoad AddStorePage');
   }
 
   dismiss(): void {
-    let data = { "itemName": this.product };
+    let data = { "itemName": this.store };
     this.viewCtrl.dismiss(data);
   }
 

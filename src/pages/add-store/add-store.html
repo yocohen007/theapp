@@ -1,5 +1,5 @@
 <!--
-  Generated template for the AddToDbPage page.
+  Generated template for the AddStorePage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{"NEW_PRODUCT" | translate}}</ion-title>
+    <ion-title>addStore</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,11 +15,12 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-label color="primary">{{"ITEM" | translate}}:</ion-label>
-    <ion-input [(ngModel)]="product" placeholder="Text Input"></ion-input>
+    <ion-label color="primary">{{"STORE" | translate}}:</ion-label>
+    <ion-input [(ngModel)]="store" placeholder="Text Input"></ion-input>
   </ion-item>
   <ion-item>
     <button ion-button color="danger" full (click)="dismiss()">OK</button>
     <button ion-button color="danger" full (click)="cancel()">Cancel</button>
   </ion-item>
+
 </ion-content>

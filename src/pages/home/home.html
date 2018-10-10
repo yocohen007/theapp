@@ -23,24 +23,9 @@
     </ion-item>
   </ion-list>
 
-  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
   <ion-fab right bottom>
-    <button ion-fab mini>
+    <button ion-fab (click)="presentAddToListPageModal()">
       <ion-icon name="add"></ion-icon>
     </button>
-    <ion-fab-list side="top">
-      <button ion-fab (click)="presentAddToListPageModal()">
-        <ion-icon name="basket"></ion-icon>
-        <ion-label>{{"NEW_ITEM" | translate}}</ion-label>
-      </button>
-      <button ion-fab (click)="navigateAddToDB()">
-        <ion-icon name="filing"></ion-icon>
-        <ion-label>{{"NEW_PRODUCT" | translate}}</ion-label>
-      </button>
-      <button ion-fab (click)="openSocial('vimeo', fab4)">
-        <ion-icon name="cart"></ion-icon>
-        <ion-label>{{"NEW_STORE" | translate}}</ion-label>
-      </button>
-    </ion-fab-list>
   </ion-fab>
 </ion-content>
