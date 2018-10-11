@@ -23,14 +23,14 @@ export class ModelService {
     return this.database.stores.slice();
   }
 
-  // getShoppingList(): listItem[] {
-  //   return this.database.shoppingList.slice();
-  // }
+  getShoppingList(): ListItem[] {
+    return this.database.shoppingList.slice();
+  }
 
   getOrderedShoppingList(store_id: number): ListItem[] {
     // console.log("getOrderedShoppingList for " + store_id)
     if (this.orderedListCache != null && this.storeOrder != null && this.storeOrder.getStoreId() == store_id) {
-      return this.orderedListCache;
+      return this.orderedListCache.slice();
     }
 
     var storeOrder: StoreOrder = this.getStoreOrder(store_id);
@@ -125,9 +125,13 @@ export class ModelService {
   }
 
   getProductName(id: number): string {
+    return this.getProduct(id).name;
+  }
+
+  getProduct(id: number): Product {
     for (var i: number = 0; i < this.database.products.length; i++) {
       if (this.database.products[i].id === id) {
-        return this.database.products[i].name;
+        return Object.assign({}, this.database.products[i]);
       }
     }
   }

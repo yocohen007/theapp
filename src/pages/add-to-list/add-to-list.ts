@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
+import { Product } from "../../common/interfaces";
+import { ModelService } from "../../model/model-service";
 
 /**
  * Generated class for the AddToListPage page.
@@ -15,13 +17,31 @@ import { IonicPage, NavController, NavParams, ViewController } from "ionic-angul
 })
 export class AddToListPage {
   public product: string = "";
+  private fullShoppingList: Product[];
 
-  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController, public modelService: ModelService,
+    public navCtrl: NavController, public navParams: NavParams) {
+    this.fullShoppingList = [];
+    let shoppingList = this.modelService.getShoppingList();
+    for (var i: number = 0; i < shoppingList.length; i++) {
+      this.fullShoppingList.push(this.modelService.getProduct(shoppingList[i].product_id));
+    }
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddToListPage");
   }
+
+  getFilteredListItems(): Product[] {
+    console.log("getFilteredListItems" + this.product);
+    return this.fullShoppingList.filter(this.includes(this.product));
+  }
+
+  includes(wordToCompare: string) {
+    return function(element: Product): boolean {
+        return element.name.includes(wordToCompare);
+    }
+}
 
   dismiss(): void {
     let data = { "itemName": this.product };

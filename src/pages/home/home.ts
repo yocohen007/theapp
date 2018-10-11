@@ -5,7 +5,6 @@ import {
   Modal,
   PopoverController
 } from "ionic-angular";
-import { AddToDbPage } from "../add-to-db/add-to-db";
 import { ModelService } from "../../model/model-service";
 import { AddToListPage } from "../add-to-list/add-to-list";
 import { ListItemPopoverPage } from "../list-item-popover/list-item-popover";
