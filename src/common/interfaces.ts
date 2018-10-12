@@ -5,6 +5,7 @@ export interface Product {
 
 export interface ListItem {
     product_id: number,
+    quantity?: number,
     marked?: boolean
 }
 

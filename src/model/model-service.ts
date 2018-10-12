@@ -79,9 +79,22 @@ export class ModelService {
     return false;
   }
 
-  addToShoppingList(productName: string) {
+  addToShoppingList(productName: string): void {
     let product: Product = this.getOrCreateProduct(productName);
-    this.database.shoppingList.push({ product_id: product.id });
+    this.addToShoppingListById(product.id);
+  }
+
+  addToShoppingListById(productId: number): void {
+    let listItem: ListItem = this.getListItemFromShoppingList(productId);
+    if (listItem == null) {
+      this.database.shoppingList.push({ product_id: productId, quantity: 1 });
+    } else {
+      if (listItem.quantity == null) {
+        listItem.quantity = 2;
+      } else {
+        listItem.quantity = listItem.quantity + 1;
+      }
+    }
     this.resetCache(true);
     this.persistDB();
   }
@@ -221,6 +234,16 @@ export class ModelService {
     }
     return -1;
   }
+
+  private getListItemFromShoppingList(productId: number): ListItem {
+    for (var i: number = 0; i < this.database.shoppingList.length; i++) {
+      if (this.database.shoppingList[i].product_id === productId) {
+        return this.database.shoppingList[i];
+      }
+    }
+    return null;
+  }
+
 
   private getIndexInOrderedShoppongList(productId: number): number {
     for (var i: number = 0; i < this.orderedListCache.length; i++) {
