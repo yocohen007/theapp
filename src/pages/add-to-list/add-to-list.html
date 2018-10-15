@@ -16,16 +16,16 @@
 <ion-content padding>
   <ion-item>
     <ion-label color="primary">{{"ITEM" | translate}}:</ion-label>
-    <ion-input [(ngModel)]="product" placeholder="Text Input"></ion-input>
+    <ion-input #input [(ngModel)]="product" placeholder="Text Input"></ion-input>
   </ion-item>
   <ion-item>
-    <button ion-button color="danger" full (click)="dismiss()">OK</button>
-    <button ion-button color="danger" full (click)="cancel()">Cancel</button>
+    <button ion-button color="danger" full (click)="dismiss()">{{ "ADD" | translate}}</button>
+    <button ion-button color="danger" full (click)="cancel()">{{"CANCEL" | translate}}</button>
   </ion-item>
   <ion-list>
-    <ion-item *ngFor="let product of getFilteredListItems()">
+    <button ion-item *ngFor="let product of getFilteredListItems()" (click)="onItemTap($event, product)">
       <ion-icon name="clipboard" item-start></ion-icon>
       <ion-label>{{product.name}}</ion-label>
-    </ion-item>
+    </button >
   </ion-list>
 </ion-content>

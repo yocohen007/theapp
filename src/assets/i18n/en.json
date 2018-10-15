@@ -12,5 +12,7 @@
   "NEW_PRODUCT": "New Product",
   "NEW_ITEM": "Add to List",
   "ITEM": "Item",
-  "STORE": "Store"
+  "STORE": "Store",
+  "ADD": "Add",
+  "CANCEL": "Cancel"
 }

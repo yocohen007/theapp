@@ -3,7 +3,9 @@ import {
   NavController,
   ModalController,
   Modal,
-  PopoverController
+  PopoverController,
+  ToastController,
+  Toast
 } from "ionic-angular";
 import { ModelService } from "../../model/model-service";
 import { AddToListPage } from "../add-to-list/add-to-list";
@@ -27,10 +29,11 @@ export class HomePage {
     public modelService: ModelService,
     public modalCtrl: ModalController,
     public popoverCtrl: PopoverController,
+    private toastCtrl: ToastController,
     private storage: Storage
   ) {
     this.stores = this.modelService.getStoresList();
-    this.stores.splice(0, 0, {"id":0, "name":"סתם"});
+    this.stores.splice(0, 0, { "id": 0, "name": "סתם" });
     this.storage.get(this.STORE_STORAGE_KEY).then(val => {
       if (val != null) {
         this.store = val;
@@ -44,9 +47,17 @@ export class HomePage {
     });
     addToListModal.onDidDismiss(data => {
       console.log(data);
-      let newItem = data.itemName;
+      if (data == null) {
+        return;
+      }
+      let newItem: string = data.itemName;
       if (newItem != null) {
         this.modelService.addToShoppingList(newItem);
+        const toast: Toast = this.toastCtrl.create({
+          message: newItem + " was added to the list",
+          duration: 3000
+        });
+        toast.present();
       }
     });
     addToListModal.present();

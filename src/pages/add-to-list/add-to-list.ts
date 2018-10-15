@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
+import { Component, ViewChild } from "@angular/core";
+import { IonicPage, NavController, NavParams, ViewController, ToastController, Toast } from "ionic-angular";
 import { Product } from "../../common/interfaces";
 import { ModelService } from "../../model/model-service";
 
@@ -16,32 +16,42 @@ import { ModelService } from "../../model/model-service";
   templateUrl: "add-to-list.html",
 })
 export class AddToListPage {
+  @ViewChild("input") myInput;
   public product: string = "";
-  private fullShoppingList: Product[];
+  private fullProductsList: Product[];
 
-  constructor(public viewCtrl: ViewController, public modelService: ModelService,
+  constructor(public viewCtrl: ViewController, private toastCtrl: ToastController,
+    public modelService: ModelService,
     public navCtrl: NavController, public navParams: NavParams) {
-    this.fullShoppingList = [];
-    let shoppingList = this.modelService.getShoppingList();
-    for (var i: number = 0; i < shoppingList.length; i++) {
-      this.fullShoppingList.push(this.modelService.getProduct(shoppingList[i].product_id));
-    }
+    this.fullProductsList = this.modelService.getProductList();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AddToListPage");
+    setTimeout(() => {
+      this.myInput.setFocus();
+    }, 150);
   }
 
   getFilteredListItems(): Product[] {
     console.log("getFilteredListItems" + this.product);
-    return this.fullShoppingList.filter(this.includes(this.product));
+    return this.fullProductsList.filter(this.includes(this.product));
   }
 
-  includes(wordToCompare: string) {
-    return function(element: Product): boolean {
-        return element.name.includes(wordToCompare);
+  private includes(wordToCompare: string) {
+    return function (element: Product): boolean {
+      return element.name.includes(wordToCompare);
     }
-}
+  }
+
+  onItemTap(event, product: Product): void {
+    this.modelService.addToShoppingList(product.name);
+    const toast: Toast = this.toastCtrl.create({
+      message: product.name + " was added to the list",
+      duration: 3000
+    });
+    toast.present();
+  }
 
   dismiss(): void {
     let data = { "itemName": this.product };
