@@ -20,6 +20,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { HttpModule } from "@angular/http";
 import { HttpClient, HttpClientModule  } from "@angular/common/http";
 import { AddStorePage } from "../pages/add-store/add-store";
+import { LanguageService } from "../common/language-service";
 
 export function createTranslateLoader(http: HttpClient) {
   console.log("createTranslateLoader1");
@@ -69,7 +70,8 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ModelService
+    ModelService,
+    LanguageService
   ]
 })
 export class AppModule {}

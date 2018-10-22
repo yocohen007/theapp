@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [attr.side]="this.platform.dir()==='ltr'?'left':'right'" [content]="content">
   <ion-header>
     <ion-toolbar>
       <ion-title>The APP</ion-title>

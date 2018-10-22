@@ -14,5 +14,6 @@
   "ITEM": "Item",
   "STORE": "Store",
   "ADD": "Add",
-  "CANCEL": "Cancel"
+  "CANCEL": "Cancel",
+  "DONE": "Done"
 }

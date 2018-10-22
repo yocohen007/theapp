@@ -14,13 +14,10 @@
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-label color="primary">{{"ITEM" | translate}}:</ion-label>
+  <ion-item horizontal>
+    <ion-label item-start color="primary">{{"ITEM" | translate}}:</ion-label>
     <ion-input #input [(ngModel)]="product" placeholder="Text Input"></ion-input>
-  </ion-item>
-  <ion-item>
-    <button ion-button color="danger" full (click)="dismiss()">{{ "ADD" | translate}}</button>
-    <button ion-button color="danger" full (click)="cancel()">{{"CANCEL" | translate}}</button>
+    <button ion-button color="danger" item-end (click)="add()">{{ "ADD" | translate}}</button>
   </ion-item>
   <ion-list>
     <button ion-item *ngFor="let product of getFilteredListItems()" (click)="onItemTap($event, product)">
@@ -28,4 +25,7 @@
       <ion-label>{{product.name}}</ion-label>
     </button >
   </ion-list>
+  <ion-item>
+    <button ion-button color="danger" full (click)="cancel()">{{"DONE" | translate}}</button>
+  </ion-item>
 </ion-content>

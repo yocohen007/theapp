@@ -30,7 +30,7 @@ export class AddToListPage {
     console.log("ionViewDidLoad AddToListPage");
     setTimeout(() => {
       this.myInput.setFocus();
-    }, 150);
+    }, 400);
   }
 
   getFilteredListItems(): Product[] {
@@ -48,12 +48,12 @@ export class AddToListPage {
     this.modelService.addToShoppingList(product.name);
     const toast: Toast = this.toastCtrl.create({
       message: product.name + " was added to the list",
-      duration: 3000
+      duration: 2000
     });
     toast.present();
   }
 
-  dismiss(): void {
+  add(): void {
     let data = { "itemName": this.product };
     this.viewCtrl.dismiss(data);
   }

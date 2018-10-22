@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, AlertController } from "ionic-angular";
-import { Storage } from "@ionic/storage";
+import { IonicPage, NavController, NavParams, AlertController, Platform } from "ionic-angular";
 import { TranslateService } from "@ngx-translate/core";
+import { LanguageService } from "../../common/language-service";
 
 /**
  * Generated class for the SettingsPage page.
@@ -17,21 +17,17 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class SettingsPage {
   lang: string;
-  private readonly LANGUAGE_STORAGE_KEY: string = "digitize.theapp.lang";
 
   constructor(
     public translate: TranslateService,
     public navCtrl: NavController,
     public navParams: NavParams,
-    private storage: Storage,
-    public alertCtrl: AlertController
+    public platform: Platform,
+    public alertCtrl: AlertController,
+    private langService: LanguageService
   ) {
-    this.storage.get(this.LANGUAGE_STORAGE_KEY).then(val => {
-      if (val != null) {
-        this.lang = val;
-      }
-      console.log("language is", this.lang);
-    });
+    this.lang = langService.getCurrentLang();
+    console.log("language is", this.lang);
   }
 
   ionViewDidLoad() {
@@ -39,15 +35,6 @@ export class SettingsPage {
   }
 
   public onLangChange(event): void {
-    console.log("lang=" + this.lang);
-    let alert = this.alertCtrl.create({
-      subTitle: 'Some changes may take affect only after app restart.',
-      buttons: ['Ok']
-    });
-
-    alert.present();
-    this.storage.set(this.LANGUAGE_STORAGE_KEY, this.lang);
-    this.translate.use(this.lang);
-
+    this.langService.langChange(this.lang);
   }
 }
