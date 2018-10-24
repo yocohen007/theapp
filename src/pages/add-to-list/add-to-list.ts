@@ -20,7 +20,8 @@ export class AddToListPage {
   public product: string = "";
   private fullProductsList: Product[];
 
-  constructor(public viewCtrl: ViewController, private toastCtrl: ToastController,
+  constructor(public viewCtrl: ViewController,
+    private toastCtrl: ToastController,
     public modelService: ModelService,
     public navCtrl: NavController, public navParams: NavParams) {
     this.fullProductsList = this.modelService.getProductList();

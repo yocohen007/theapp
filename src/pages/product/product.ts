@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Product } from '../../common/interfaces';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, ModalController, Modal } from "ionic-angular";
+import { Product } from "../../common/interfaces";
+import { ModelService } from "../../model/model-service";
+import { AddPriceCheckPage } from "../add-price-check/add-price-check";
 
 /**
  * Generated class for the ProductPage page.
@@ -11,19 +13,38 @@ import { Product } from '../../common/interfaces';
 
 @IonicPage()
 @Component({
-  selector: 'page-product',
-  templateUrl: 'product.html',
+  selector: "page-product",
+  templateUrl: "product.html",
 })
 export class ProductPage {
   product: Product;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public modelService: ModelService,
+    public navParams: NavParams) {
     this.product = navParams.get("product");
-
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductPage');
+    console.log("ionViewDidLoad ProductPage");
   }
+
+  presentAddPricePageModal(): void {
+    let addPriceCheckModal: Modal = this.modalCtrl.create(AddPriceCheckPage, {
+      product: this.product
+    });
+    addPriceCheckModal.onDidDismiss(data => {
+      console.log(data);
+      if (data == null) {
+        return;
+      }
+      let store_id: number = data.store_id;
+      let price: number = data.price;
+      this.modelService.addPriceCheck(this.product.id, store_id, price);
+    });
+    addPriceCheckModal.present();
+  }
+
 
 }

@@ -26,5 +26,6 @@ export interface Database {
     products?: Product[],
     shoppingList?: ListItem[],
     stores?: Store[],
-    storeOrders: {}
+    storeOrders: {},
+    prices: {},
 }

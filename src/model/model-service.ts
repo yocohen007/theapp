@@ -1,6 +1,6 @@
 import { Storage } from "@ionic/storage";
 import { Injectable } from "@angular/core";
-import { Database, Product, ListItem, Store } from "../common/interfaces";
+import { Database, Product, ListItem, Store, PriceCheck } from "../common/interfaces";
 import { StoreOrder } from "../common/store-order";
 
 @Injectable()
@@ -25,6 +25,19 @@ export class ModelService {
 
   getShoppingList(): ListItem[] {
     return this.database.shoppingList.slice();
+  }
+
+  getPriceChecks(product_id: number): PriceCheck[] {
+    let retObjs: {} = this.database.prices[product_id];
+    var ret: PriceCheck[] = [];
+    if (retObjs) {
+      //do something;
+      let keys = Object.keys(retObjs);
+      keys.forEach(key => {
+        ret.push(retObjs[key]);
+      });
+    }
+    return ret;
   }
 
   getOrderedShoppingList(store_id: number): ListItem[] {
@@ -141,12 +154,43 @@ export class ModelService {
     return this.getProduct(id).name;
   }
 
+  getStoreName(id: number): string {
+    let store: Store = this.getStore(id);
+    if (store) {
+      return store.name;
+    }
+    return "N/A"
+  }
+
   getProduct(id: number): Product {
     for (var i: number = 0; i < this.database.products.length; i++) {
       if (this.database.products[i].id === id) {
         return Object.assign({}, this.database.products[i]);
       }
     }
+  }
+
+  getStore(id: number): Store {
+    const stores = this.database.stores;
+    for (var i: number = 0; i < stores.length; i++) {
+      if (stores[i].id === id) {
+        return Object.assign({}, stores[i]);
+      }
+    }
+  }
+
+  addPriceCheck(product_id: number, store_id: number, price: number): any {
+    let productPrices: {} = this.database.prices[product_id];
+    if (!productPrices) {
+      this.database.prices[product_id] = {};
+    }
+    this.database.prices[product_id][store_id] = {
+      product_id: product_id,
+      store_id: store_id,
+      date: new Date().toLocaleString(),
+      price: price
+    }
+    this.persistDB();
   }
 
   private moveItem(listItem: ListItem, store_id: number = 0, up: boolean): void {
@@ -256,11 +300,12 @@ export class ModelService {
 
   private prepareData(): void {
     this.database = {
-      version: 0,
+      version: 1,
       products: [],
       stores: [{ id: 1, name: "רמי לוי" }, { id: 2, name: "דוכן" }],
       shoppingList: [],
-      storeOrders: {}
+      storeOrders: {},
+      prices: {}
     };
     // this.storage.remove(this.DATABASE_STORAGE_KEY);
     this.storage.get(this.DATABASE_STORAGE_KEY).then(val => {
@@ -270,10 +315,18 @@ export class ModelService {
           this.database.version = 0;
         }
       }
+      this.upgradeDB();
       this.persistDB();
       this.resetCache();
       console.log("db is", val);
     });
+  }
+
+  upgradeDB(): void {
+    if (this.database.version < 1) {
+      this.database.prices = {};
+      this.database.version = 1;
+    }
   }
 
   private persistDB() {

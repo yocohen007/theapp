@@ -15,5 +15,8 @@
   "STORE": "Store",
   "ADD": "Add",
   "CANCEL": "Cancel",
-  "DONE": "Done"
+  "DONE": "Done",
+  "PRICES": "Prices",
+  "ADD_PRICE_CHECK": "Update Price",
+  "PRICE": "Price"
 }
