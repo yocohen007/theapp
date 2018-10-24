@@ -21,6 +21,7 @@ import { HttpModule } from "@angular/http";
 import { HttpClient, HttpClientModule  } from "@angular/common/http";
 import { AddStorePage } from "../pages/add-store/add-store";
 import { LanguageService } from "../common/language-service";
+import { ProductPage } from "../pages/product/product";
 
 export function createTranslateLoader(http: HttpClient) {
   console.log("createTranslateLoader1");
@@ -33,6 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
     MyApp,
     HomePage,
     ProductsPage,
+    ProductPage,
     StoresPage,
     SettingsPage,
     AddToDbPage,
@@ -59,6 +61,7 @@ export function createTranslateLoader(http: HttpClient) {
     MyApp,
     HomePage,
     ProductsPage,
+    ProductPage,
     StoresPage,
     SettingsPage,
     AddToDbPage,

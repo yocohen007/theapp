@@ -64,6 +64,7 @@ export class HomePage {
   }
 
   presentPopover(myEvent, listItem: ListItem) {
+    console.log("popover");
     let popover = this.popoverCtrl.create(ListItemPopoverPage, {
       item: listItem,
       store: this.store
@@ -71,6 +72,11 @@ export class HomePage {
     popover.present({
       ev: myEvent
     });
+  }
+
+  itemTapped(myEvent, listItem: ListItem) {
+    console.log("mark " + listItem.product_id);
+    this.modelService.markShoppingListItem(listItem);
   }
 
   onChangeStore(event): void {

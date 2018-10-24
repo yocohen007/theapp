@@ -14,6 +14,13 @@ export interface Store {
     name: string
 }
 
+export interface PriceCheck {
+    product_id: number,
+    store_id: number,
+    date: string,
+    price: number
+}
+
 export interface Database {
     version: number,
     products?: Product[],

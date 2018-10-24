@@ -15,7 +15,7 @@
     </ion-select>
   </ion-item>
   <ion-list>
-    <ion-item *ngFor="let listItem of modelService.getOrderedShoppingList(this.store)" (click)="presentPopover($event, listItem)">
+    <ion-item *ngFor="let listItem of modelService.getOrderedShoppingList(this.store)" (press)="presentPopover($event, listItem)" (tap)="itemTapped($event, listItem)">
       <ion-icon name="clipboard" item-start></ion-icon>
       <ion-label [style.text-decoration]="listItem.marked ? 'line-through' :
         ''">{{modelService.getProductName(listItem.product_id)}}

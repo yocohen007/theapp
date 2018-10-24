@@ -4,6 +4,7 @@ import { ModelService } from "../../model/model-service";
 import { TranslateService } from "@ngx-translate/core";
 import { Product } from "../../common/interfaces";
 import { AddToDbPage } from "../add-to-db/add-to-db";
+import { ProductPage } from "../product/product";
 
 @Component({
   selector: "page-products",
@@ -27,7 +28,7 @@ export class ProductsPage {
 
   itemTapped(event, product) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ProductsPage, {
+    this.navCtrl.push(ProductPage, {
       product: product
     });
   }
