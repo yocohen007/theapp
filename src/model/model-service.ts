@@ -216,7 +216,7 @@ export class ModelService {
           maxId = this.database.products[i].id;
         }
       }
-      product = { id: maxId + 1, name: productName };
+      product = { id: maxId + 1, name: productName, icon:"clipboard" };
       if (this.database.storeOrders[0] == null) {
         this.database.storeOrders[0] = [];
       }

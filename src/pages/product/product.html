@@ -14,15 +14,20 @@
 
 
 <ion-content padding>
+  <ion-item>
+    <ion-icon [name]="this.product.icon"></ion-icon>
+    <button ion-button round outline item-end>
+      <ion-icon name="create"></ion-icon>
+    </button>
+  </ion-item>
   <ion-list radio-group>
     <ion-list-header>
       {{ "PRICES" | translate }}
     </ion-list-header>
-
     <ion-item *ngFor="let priceCheck of
       modelService.getPriceChecks(this.product.id)">
       <ion-icon name="clipboard" item-start></ion-icon>
-      <ion-label>{{this.modelService.getStoreName(priceCheck.store_id)}}  {{priceCheck.price}}</ion-label>
+      <ion-label>{{this.modelService.getStoreName(priceCheck.store_id)}} {{priceCheck.price}}</ion-label>
     </ion-item>
   </ion-list>
   <ion-fab right bottom>
