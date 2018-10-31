@@ -67,7 +67,12 @@ export class ModelService {
     if (order == null && store_id != 0) {
       if (this.isStoreExist(store_id)) {
         //create new store order
-        order = this.database.storeOrders[0].slice();
+        var generalOrder = this.database.storeOrders[0];
+        if (!generalOrder) {
+          this.database.storeOrders[0] = [];
+          generalOrder = [];
+        }
+        order = generalOrder.slice();
         this.database.storeOrders[store_id] = order;
         this.persistDB();
       } else {
