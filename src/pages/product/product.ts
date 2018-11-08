@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Modal } from "ion
 import { Product } from "../../common/interfaces";
 import { ModelService } from "../../model/model-service";
 import { AddPriceCheckPage } from "../add-price-check/add-price-check";
+import { IconChooserPage } from "../icon-chooser/icon-chooser";
 
 /**
  * Generated class for the ProductPage page.
@@ -46,5 +47,20 @@ export class ProductPage {
     addPriceCheckModal.present();
   }
 
+  presentIconChooser(): void {
+    let iconChooserModal: Modal = this.modalCtrl.create(IconChooserPage, {
+      product: this.product
+    });
+    iconChooserModal.onDidDismiss(data => {
+      console.log(data);
+      if (data == null) {
+        return;
+      }
+      // let store_id: number = data.store_id;
+      // let price: number = data.price;
+      // this.modelService.addPriceCheck(this.product.id, store_id, price);
+    });
+    iconChooserModal.present();
+  }
 
 }

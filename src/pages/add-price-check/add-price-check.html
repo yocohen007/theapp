@@ -16,7 +16,7 @@
 <ion-content padding>
   <ion-item>
     <ion-label>{{ "STORE" | translate }}</ion-label>
-    <ion-select [(ngModel)]="store_id">
+    <ion-select interface="popover" [(ngModel)]="store_id">
       <ion-option *ngFor="let store of this.stores" [value]="store.id">{{store.name}}</ion-option>
     </ion-select>
   </ion-item>

@@ -23,6 +23,7 @@ import { AddStorePage } from "../pages/add-store/add-store";
 import { LanguageService } from "../common/language-service";
 import { ProductPage } from "../pages/product/product";
 import { AddPriceCheckPage } from "../pages/add-price-check/add-price-check";
+import { IconChooserPage } from "../pages/icon-chooser/icon-chooser";
 
 export function createTranslateLoader(http: HttpClient) {
   console.log("createTranslateLoader1");
@@ -42,7 +43,8 @@ export function createTranslateLoader(http: HttpClient) {
     AddPriceCheckPage,
     AddToListPage,
     AddStorePage,
-    ListItemPopoverPage
+    ListItemPopoverPage,
+    IconChooserPage
   ],
   imports: [
     HttpModule,
@@ -70,14 +72,15 @@ export function createTranslateLoader(http: HttpClient) {
     AddPriceCheckPage,
     AddToListPage,
     AddStorePage,
-    ListItemPopoverPage
+    ListItemPopoverPage,
+    IconChooserPage
   ],
   providers: [
+    LanguageService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ModelService,
-    LanguageService
   ]
 })
 export class AppModule {}

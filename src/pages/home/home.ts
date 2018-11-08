@@ -33,7 +33,7 @@ export class HomePage {
     private storage: Storage
   ) {
     this.stores = this.modelService.getStoresList();
-    this.stores.splice(0, 0, { "id": 0, "name": "סתם" });
+    // this.stores.splice(0, 0, { "id": 0, "name": "סתם" });
     this.storage.get(this.STORE_STORAGE_KEY).then(val => {
       if (val != null) {
         this.store = val;

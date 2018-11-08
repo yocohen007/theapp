@@ -12,7 +12,8 @@ export class LanguageService {
 
     constructor(private storage: Storage,
         public platform: Platform,
-        private translateService: TranslateService, public alertCtrl: AlertController
+        private translateService: TranslateService,
+        public alertCtrl: AlertController
     ) {
         console.log("constructor model-service");
     }
@@ -35,19 +36,19 @@ export class LanguageService {
     public langChange(lang: string): void {
         this.lang = lang;
         let alert = this.alertCtrl.create({
-          subTitle: 'Some changes may take affect only after app restart.',
-          buttons: ['Ok']
+            subTitle: 'Some changes may take affect only after app restart.',
+            buttons: ['Ok']
         });
-    
+
         alert.present();
         this.storage.set(this.LANGUAGE_STORAGE_KEY, this.lang);
         if (this.lang == "heb") {
-          this.platform.setDir('rtl', true);
+            this.platform.setDir('rtl', true);
         } else {
-          this.platform.setDir('ltr', true);
+            this.platform.setDir('ltr', true);
         }
         this.translateService.use(this.lang);
-      }
+    }
 
     public getCurrentLang(): string {
         return this.lang;

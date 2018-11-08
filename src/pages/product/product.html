@@ -16,7 +16,7 @@
 <ion-content padding>
   <ion-item>
     <ion-icon [name]="this.product.icon"></ion-icon>
-    <button ion-button round outline item-end>
+    <button ion-button round outline item-end (click)="presentIconChooser()">
       <ion-icon name="create"></ion-icon>
     </button>
   </ion-item>

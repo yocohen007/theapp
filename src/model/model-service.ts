@@ -221,7 +221,7 @@ export class ModelService {
           maxId = this.database.products[i].id;
         }
       }
-      product = { id: maxId + 1, name: productName, icon:"clipboard" };
+      product = { id: maxId + 1, name: productName, icon: "clipboard" };
       if (this.database.storeOrders[0] == null) {
         this.database.storeOrders[0] = [];
       }
@@ -307,7 +307,7 @@ export class ModelService {
     this.database = {
       version: 1,
       products: [],
-      stores: [{ id: 1, name: "רמי לוי" }, { id: 2, name: "דוכן" }],
+      stores: [{ id: 0, name: "General" }],
       shoppingList: [],
       storeOrders: {},
       prices: {}
