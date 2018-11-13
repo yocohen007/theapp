@@ -39,6 +39,7 @@ export class HomePage {
         this.store = val;
       }
     });
+    
   }
 
   presentAddToListPageModal(): void {
